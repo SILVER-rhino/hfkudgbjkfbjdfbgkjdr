@@ -1,0 +1,24 @@
+[Unit]
+Description=Ryno Sender Telegram Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Create a dedicated linux user (recommended) and put the project under its home directory.
+User=bot
+Group=bot
+
+WorkingDirectory=/opt/ryno-bot
+EnvironmentFile=/opt/ryno-bot/.env
+
+# Use the venv python
+ExecStart=/opt/ryno-bot/.venv/bin/python /opt/ryno-bot/bot.py
+
+Restart=on-failure
+RestartSec=3
+
+# Logs go to journald (view with: journalctl -u ryno-sender-bot -f)
+
+[Install]
+WantedBy=multi-user.target
